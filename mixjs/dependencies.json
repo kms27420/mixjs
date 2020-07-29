@@ -1,0 +1,25 @@
+[
+	{
+		"name": "router", 
+		"files": [
+			"#{ROOT_PATH}/route/router.js"
+		], 
+		"dependencies": "mvc"
+	}, 
+	{
+		"name": "history", 
+		"files": [
+			"#{ROOT_PATH}/route/history.js"
+		], 
+		"dependencies": [
+			"router"
+		]
+	}, 
+	{
+		"name": "mvc", 
+		"files": [
+			"#{ROOT_PATH}/mvc/ctrl.storage.js", "#{ROOT_PATH}/mvc/view.storage.js"
+		], 
+		"dependencies": null
+	}
+]
