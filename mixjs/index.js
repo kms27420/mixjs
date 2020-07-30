@@ -7,12 +7,13 @@
 	$w.__proto__.__defineGetter__('PROPS_KEY', function() { return 'PROPS'; });
 	$w.__proto__.__defineGetter__('DEPS_KEY', function() { return 'DEPENDENCIES'; });
 	
+	let $ = $w[LIB_NAME] ? $w[LIB_NAME] : new Mix();
+	
 	jsonFileToJsonObj(PROPS_FILE_NAME, function(PROPS) {
 		let propsValid = new PropsValidator().checkValid(PROPS);
 		if(propsValid!=='valid')	throw propsValid;
 		propsValid = null;
 		
-		let $ = $w[LIB_NAME] ? $w[LIB_NAME] : new Mix();
 		$.__proto__.__defineGetter__(PROPS_KEY, function() { return JSON.parse(JSON.stringify(PROPS)); });
 		$w[LIB_NAME] = $;
 		
