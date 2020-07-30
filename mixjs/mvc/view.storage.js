@@ -1,7 +1,7 @@
-(function($mix) {
+(function($) {
 	'use strict';
 	
-	$mix.viewStorage = new ViewStorage();
+	$.viewStorage = new ViewStorage();
 	
 	function ViewStorage() {
 		let $this = this;
@@ -16,4 +16,4 @@
 			return !(!view || !view.element);
 		}
 	}
-})(mix);
+})(window[LIB_NAME]);

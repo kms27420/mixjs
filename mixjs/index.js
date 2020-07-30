@@ -1,35 +1,41 @@
 (function($w) {
 	'use strict';
+
+	$w.__proto__.__defineGetter__('LIB_NAME', function() { return 'mix'; });
+	$w.__proto__.__defineGetter__('PROPS_FILE_NAME', function() { return LIB_NAME+'.json'; });
+	$w.__proto__.__defineGetter__('DEPS_FILE_NAME', function() { return 'dependencies.json'; });
+	$w.__proto__.__defineGetter__('PROPS_KEY', function() { return 'PROPS'; });
+	$w.__proto__.__defineGetter__('DEPS_KEY', function() { return 'DEPENDENCIES'; });
 	
-	jsonFileToJsonObj('mix.json', function(PROPS) {
+	jsonFileToJsonObj(PROPS_FILE_NAME, function(PROPS) {
 		let propsValid = new PropsValidator().checkValid(PROPS);
 		if(propsValid!=='valid')	throw propsValid;
 		propsValid = null;
 		
-		let $mix = $w.mix ? $w.mix : new Kms();
-		$mix.__proto__.__defineGetter__('PROPS', function() { return JSON.parse(JSON.stringify(PROPS)); });
-		$w.mix = $mix;
+		let $ = $w[LIB_NAME] ? $w[LIB_NAME] : new Mix();
+		$.__proto__.__defineGetter__(PROPS_KEY, function() { return JSON.parse(JSON.stringify(PROPS)); });
+		$w[LIB_NAME] = $;
 		
-		jsonFileToJsonObj($w.mix.PROPS.rootPath+'dependencies.json', function(deps) {
+		jsonFileToJsonObj($.PROPS.rootPath+DEPS_FILE_NAME, function(deps) {
 			let depsValid = new DependenciesValidator().checkValid(deps);
 			if(depsValid!=='valid')	throw depsValid;
 			depsValid = null;
-			$w.mix.__proto__.__defineGetter__('DEPENDENCIES', function() { return JSON.parse(JSON.stringify(deps)); });
+			$.__proto__.__defineGetter__(DEPS_KEY, function() { return JSON.parse(JSON.stringify(deps)); });
 			let loader = new DependenciesLoader();
 			loader.loadAll(deps);
-			loader.loadAll($w.mix.PROPS.includes);
+			loader.loadAll($.PROPS.includes);
 			
 			startApp();
 			function startApp() {
 				setTimeout(function() {
-					if($w.mix.history)	$w.location.hash = $w.mix.history.mainHash;
+					if($.history)	$w.location.hash = $.history.mainHash;
 					else	startApp();
 				}, 100);
 			}
 		});
 	});
 	
-	function Kms() {}
+	function Mix() {}
 	
 	function PropsValidator() {
 		let $this = this;
@@ -46,7 +52,7 @@
 					key.required && typeof props[key.name]==='undefined' 
 					|| key.nullable && props[key.name]===null
 				);
-				if(!isValid)	return 'Required key: ' + key + '. Invlid props. Please check the "mix.json" file.';
+				if(!isValid)	return 'Required key: ' + key + '. Invlid props. Please check the "' + PROPS_FILE_NAME + '" file.';
 				if(key==='includes')	return new DependenciesValidator().checkValid(props[key]);
 				return 'valid';
 			}, 'valid');
@@ -125,7 +131,7 @@
 				deps[idx].files.forEach(function(file) {
 					let tag = document.createElement(file.tag ? file.tag : 'script');
 					if(typeof file==='string') {
-						tag.src = file.replace(/#{ROOT_PATH}/gi, $w.mix.PROPS.rootPath);
+						tag.src = file.replace(/#{ROOT_PATH}/gi, $.PROPS.rootPath);
 					} else {
 						Object.keys(file).forEach(function(key) {
 							switch(key) {
@@ -133,7 +139,7 @@
 							case 'path':
 								let pathKey = PATH_KEYS[tag.tagName.toLowerCase()];
 								pathKey = pathKey ? pathKey : 'src';
-								let path = file.path.replace(/#{ROOT_PATH}/gi, $w.mix.PROPS.rootPath);
+								let path = file.path.replace(/#{ROOT_PATH}/gi, $.PROPS.rootPath);
 								if(typeof tag[pathKey]!=='undefined')	tag[pathKey] = path;
 								else	tag.setAttribute(pathKey, path);
 								pathKey = path = null;

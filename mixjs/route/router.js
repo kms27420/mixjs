@@ -1,8 +1,8 @@
-(function($mix, $viewStorage, $ctrlStorage) {
+(function($, $viewStorage, $ctrlStorage) {
 	'use strict';
 	
 	const ROUTER = new Router();
-	$mix.__proto__.__defineGetter__('router', function() { return ROUTER; });
+	$.__proto__.__defineGetter__('router', function() { return ROUTER; });
 	
 	function Router() {
 		let $this = this;
@@ -58,9 +58,9 @@
 			let ckEles = null;
 			
 			function init() {
-				let mixApp = document.getElementById('APP');
-				for(var i=mixApp.children.length-1; i>=0; i++)	mixApp.removeChild(mixApp.children[i]);
-				mixApp.appendChild($routeThis.view.element);
+				let appDiv = document.getElementById('APP');
+				for(var i=appDiv.children.length-1; i>=0; i++)	appDiv.removeChild(appDiv.children[i]);
+				appDiv.appendChild($routeThis.view.element);
 				if(!$routeThis.view.$ctrl) 
 					$routeThis.view.__defineGetter__('$ctrl', function() { return $routeThis.ctrl; });
 				if(!$routeThis.ctrl.$view) 
@@ -109,7 +109,7 @@
 				console.log('diffCkModel: ', diffCkModel);
 				$routeThis.ctrl.init();
 				modelBinder = setInterval(modelBind, 50);
-				mixApp = null;
+				appDiv = null;
 			}
 			function stop() {
 				if(!modelBinder)	return;
@@ -117,4 +117,4 @@
 			}
 		}
 	}
-})(mix, mix.viewStorage, mix.ctrlStorage);
+})(window[LIB_NAME], window[LIB_NAME].viewStorage, window[LIB_NAME].ctrlStorage);

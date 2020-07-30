@@ -1,7 +1,7 @@
-(function($mix) {
+(function($) {
 	'use strict';
 	
-	$mix.ctrlStorage = new CtrlStorage();
+	$.ctrlStorage = new CtrlStorage();
 	
 	function CtrlStorage() {
 		let $this = this;
@@ -16,4 +16,4 @@
 			return !(!ctrl || typeof ctrl.init!=='function');
 		}
 	}
-})(mix);
+})(window[LIB_NAME]);

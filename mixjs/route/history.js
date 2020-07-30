@@ -1,8 +1,8 @@
-(function($mix, $router) {
+(function($, $router) {
 	'use strict';
 	
 	const HISTORY = new History();
-	$mix.__proto__.__defineGetter__('history', function() { return HISTORY; });
+	$.__proto__.__defineGetter__('history', function() { return HISTORY; });
 	
 	function History() {
 		let $historyThis = this;
@@ -37,4 +37,4 @@
 			route = null;
 		}
 	}
-})(mix, mix.router);
+})(window[LIB_NAME], window[LIB_NAME].router);
