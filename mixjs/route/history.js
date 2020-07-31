@@ -18,7 +18,6 @@
 		$historyThis = null;
 		
 		window.onhashchange = onHashChange;
-		onHashChange();
 		
 		function back() {
 			window.history.back();
@@ -31,7 +30,7 @@
 		function onHashChange(evt) {
 			if(CAPSULE.currentRoute && window.location.hash===CAPSULE.currentRoute.hash)	return;
 			let route = $router.getRoute({ hash: window.location.hash });
-			if(!route)	return window.location.hash = CAPSULE.currentRoute ? CAPSULE.currentRoute.hash : $router.getRoute({ hash: CAPSULE.mainHash });
+			if(!route)	return window.location.hash = CAPSULE.currentRoute ? CAPSULE.currentRoute.hash : $router.getRoute({ hash: CAPSULE.mainHash }).hash;
 			if(CAPSULE.currentRoute)	CAPSULE.currentRoute.stop();
 			(CAPSULE.currentRoute = route).init();
 			route = null;

@@ -29,7 +29,7 @@
 			startApp();
 			function startApp() {
 				setTimeout(function() {
-					if($.history)	$w.location.hash = $.history.mainHash;
+					if($.router && $.history && $.router.getRoute({ hash: $.history.mainHash }))	$w.onhashchange();
 					else	startApp();
 				}, 100);
 			}

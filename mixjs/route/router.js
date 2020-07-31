@@ -59,7 +59,7 @@
 			
 			function init() {
 				let appDiv = document.getElementById('APP');
-				for(var i=appDiv.children.length-1; i>=0; i++)	appDiv.removeChild(appDiv.children[i]);
+				for(var i=appDiv.children.length-1; i>=0; i--)	appDiv.removeChild(appDiv.children[i]);
 				appDiv.appendChild($routeThis.view.element);
 				if(!$routeThis.view.$ctrl) 
 					$routeThis.view.__defineGetter__('$ctrl', function() { return $routeThis.ctrl; });
