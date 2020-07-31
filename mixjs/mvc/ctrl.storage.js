@@ -1,7 +1,8 @@
 (function($) {
 	'use strict';
 	
-	$.ctrlStorage = new CtrlStorage();
+	const CTRL_STORAGE = new CtrlStorage();
+	$.__proto__.__defineGetter__('ctrlStorage', function() { return CTRL_STORAGE; });
 	
 	function CtrlStorage() {
 		let $this = this;

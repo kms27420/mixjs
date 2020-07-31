@@ -1,7 +1,8 @@
 (function($) {
 	'use strict';
 	
-	$.viewStorage = new ViewStorage();
+	const VIEW_STORAGE = new ViewStorage();
+	$.__proto__.__defineGetter__('viewStorage', function() { return VIEW_STORAGE; });
 	
 	function ViewStorage() {
 		let $this = this;

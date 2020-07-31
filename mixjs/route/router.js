@@ -106,7 +106,6 @@
 					}
 				}
 				diffCkModel = JSON.stringify($routeThis.view.$model);
-				console.log('diffCkModel: ', diffCkModel);
 				$routeThis.ctrl.init();
 				modelBinder = setInterval(modelBind, 50);
 				appDiv = null;

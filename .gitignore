@@ -81,3 +81,6 @@ local.properties
 .history
 
 # End of https://www.toptal.com/developers/gitignore/api/eclipse
+/node-server.js
+/node_modules/
+/package-lock.json

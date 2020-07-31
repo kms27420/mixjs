@@ -21,5 +21,19 @@
 			"#{ROOT_PATH}/mvc/ctrl.storage.js", "#{ROOT_PATH}/mvc/view.storage.js"
 		], 
 		"dependencies": null
+	}, 
+	{
+		"name": "ajax", 
+		"files": [
+			"#{ROOT_PATH}/ajax/ajax.js"
+		], 
+		"dependencies": "promise"
+	}, 
+	{
+		"name": "promise", 
+		"files": [
+			"#{ROOT_PATH}/sync/promise.js"
+		], 
+		"dependencies": null
 	}
 ]
